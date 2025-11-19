@@ -8,11 +8,11 @@ type AboutProps = {
 
 export default function About({ about }: AboutProps) {
   return (
-    <Section id="about" title="About Me" icon={<User className="h-6 w-6" />}>
+    <Section id="about" title="About Me" icon={<User className="h-6 w-6" />} hideTitle={true}>
       <div className="grid items-center gap-8 md:grid-cols-3">
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full md:h-64 md:w-64">
           <Image
-            src="/images/profile-picture.jpg"
+            src="/images/1755766029947.jpg"
             alt="Shilpa Sinha"
             width={400}
             height={400}
