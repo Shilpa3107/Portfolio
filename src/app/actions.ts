@@ -2,16 +2,16 @@
 
 import {
   generatePortfolioFromResume,
+  type GeneratePortfolioOutput,
 } from '@/ai/flows/generate-portfolio-from-resume';
-import { extractBasicResumeData, type ExtractBasicResumeDataOutput } from '@/ai/flows/extract-basic-resume-data';
+import { extractBasicResumeData } from '@/ai/flows/extract-basic-resume-data';
 import {
   resumeText,
   zenithChatDescription,
   messageCraftAIDescription,
 } from '@/lib/resume-data';
 
-// The AI's output is now the main data structure. We just add the contact info.
-export type PortfolioData = Awaited<ReturnType<typeof generatePortfolioFromResume>> & {
+export type PortfolioData = GeneratePortfolioOutput & {
   name: string;
   email: string;
   phone: string;
@@ -23,7 +23,7 @@ export type PortfolioData = Awaited<ReturnType<typeof generatePortfolioFromResum
 export async function generatePortfolioAction(): Promise<PortfolioData> {
   try {
     const basicResumeData = await extractBasicResumeData({ resumeText });
-    
+
     const portfolioData = await generatePortfolioFromResume({
       resumeData: basicResumeData,
       zenithChatDescription,

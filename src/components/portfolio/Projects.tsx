@@ -17,33 +17,39 @@ const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-').replac
 const getProjectImage = (projectName: string) => {
   const slug = slugify(projectName);
   const image = PlaceHolderImages.find(img => img.id.includes(slug));
-  return image || PlaceHolderImages[0];
+  // A fallback image in case no match is found
+  return image || PlaceHolderImages.find(img => img.id === 'messagecraft-ai') || PlaceHolderImages[0];
 };
 
 export default function Projects({ projects, zenithChat, messageCraftAI }: ProjectsProps) {
-  
   const allProjects = [
-    ...projects,
+    ...(projects || []),
     {
       name: 'Zenith Chat',
       description: zenithChat.features.join(' '),
-      technologies: zenithChat.techStack.join(', '),
+      technologies: zenithChat.techStack,
     },
     {
       name: 'MessageCraft AI',
-      description: messageCraftAI.features.join('\n'),
-      technologies: messageCraftAI.techStack.join(', '),
+      description: messageCraftAI.features.join(' '),
+      technologies: messageCraftAI.techStack,
     },
   ];
-  
+
   return (
     <Section id="projects" title="Projects" icon={<Lightbulb className="h-6 w-6" />}>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {allProjects.map((project, index) => {
           if (!project.name) return null;
           const projectImage = getProjectImage(project.name);
-          const technologies = typeof project.technologies === 'string' ? project.technologies.split(/, | • |:\s/): [];
           
+          let technologies: string[] = [];
+          if (Array.isArray(project.technologies)) {
+            technologies = project.technologies;
+          } else if (typeof project.technologies === 'string') {
+            technologies = project.technologies.split(/, | • |:\s/);
+          }
+
           return (
             <Card key={index} className="flex flex-col overflow-hidden shadow-md transition-shadow hover:shadow-xl">
               <div className="relative h-48 w-full">

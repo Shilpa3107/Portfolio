@@ -10,7 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { extractBasicResumeData, type ExtractBasicResumeDataOutput } from './extract-basic-resume-data';
+import { type ExtractBasicResumeDataOutput } from './extract-basic-resume-data';
 
 const GeneratePortfolioInputSchema = z.object({
   resumeData: z.custom<ExtractBasicResumeDataOutput>(),
@@ -20,33 +20,36 @@ const GeneratePortfolioInputSchema = z.object({
 export type GeneratePortfolioInput = z.infer<typeof GeneratePortfolioInputSchema>;
 
 const ZenithChatSchema = z.object({
+  name: z.literal('Zenith Chat'),
   features: z.array(z.string()).describe('The list of features of the project.'),
   techStack: z.array(z.string()).describe('The list of technologies used in the project.'),
 });
 
 const MessageCraftAISchema = z.object({
+  name: z.literal('MessageCraft AI'),
   features: z.array(z.string()).describe('The list of features of the project.'),
   techStack: z.array(z.string()).describe('The list of technologies used in the project.'),
 });
 
-const GeneratePortfolioOutputSchema = z.object({
+const ProjectDetailsSchema = z.object({
   zenithChat: ZenithChatSchema.describe('Zenith Chat project details'),
   messageCraftAI: MessageCraftAISchema.describe('MessageCraft AI project details'),
 });
-export type GeneratePortfolioOutput = z.infer<typeof GeneratePortfolioOutputSchema>;
+
+export type GeneratePortfolioOutput = ExtractBasicResumeDataOutput & z.infer<typeof ProjectDetailsSchema>;
+
 
 export async function generatePortfolioFromResume(
   input: GeneratePortfolioInput
-): Promise<ExtractBasicResumeDataOutput & GeneratePortfolioOutput> {
-  const basicData = input.resumeData;
+): Promise<GeneratePortfolioOutput> {
   const projectDetails = await generatePortfolioFromResumeFlow(input);
-  return { ...basicData, ...projectDetails };
+  return { ...input.resumeData, ...projectDetails };
 }
 
 const prompt = ai.definePrompt({
   name: 'generatePortfolioFromResumePrompt',
   input: {schema: GeneratePortfolioInputSchema},
-  output: {schema: GeneratePortfolioOutputSchema},
+  output: {schema: ProjectDetailsSchema},
   prompt: `You are an AI expert at extracting project details from descriptions.
   
   Extract the features and tech stack from the Zenith Chat and MessageCraft AI project descriptions.
@@ -65,7 +68,7 @@ const generatePortfolioFromResumeFlow = ai.defineFlow(
   {
     name: 'generatePortfolioFromResumeFlow',
     inputSchema: GeneratePortfolioInputSchema,
-    outputSchema: GeneratePortfolioOutputSchema,
+    outputSchema: ProjectDetailsSchema,
   },
   async input => {
     const {output} = await prompt(input);
