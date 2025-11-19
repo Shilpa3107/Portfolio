@@ -113,6 +113,21 @@ export const portfolioData: PortfolioData = {
         technologies: ['React', 'TypeScript', 'Redux', 'MUI', 'Express.js'],
         description: 'A Kanban board application for managing tasks through different stages. Features drag-and-drop functionality and a search bar to filter tasks.'
     },
+    {
+      name: 'Brain_Tumor_Detection',
+      technologies: ['MATLAB'],
+      description: 'Processes medical images to identify and highlight tumor regions using advanced image processing techniques, aiding in early diagnosis.'
+    },
+    {
+      name: 'BMI Calculator',
+      technologies: ['Java', 'XML'],
+      description: 'A simple mobile app that calculates Body Mass Index (BMI) based on user input for weight and height, providing a quick health assessment.'
+    },
+    {
+      name: 'Netflix_Clone',
+      technologies: ['HTML', 'CSS', 'JavaScript'],
+      description: 'A web application that mimics the Netflix user interface and features, including an interactive FAQ section with accordions.'
+    },
   ],
   skills: [
     "Languages: Python, Java, JavaScript, C, HTML5, CSS, SQL, TypeScript, PHP",
