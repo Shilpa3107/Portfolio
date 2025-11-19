@@ -51,7 +51,7 @@ export default function Projects({ projects, zenithChat, messageCraftAI }: Proje
           }
 
           return (
-            <Card key={index} className="flex flex-col overflow-hidden shadow-md transition-shadow hover:shadow-xl">
+            <Card key={index} className="flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
               <div className="relative h-48 w-full">
                 <Image
                   src={projectImage.imageUrl}

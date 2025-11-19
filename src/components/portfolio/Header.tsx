@@ -39,11 +39,11 @@ export default function Header({ data }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <a className="mr-6 flex items-center space-x-2" href="/">
-            <span className="hidden font-bold sm:inline-block font-headline">
+            <span className="hidden font-bold sm:inline-block font-headline text-lg">
               {data.name}
             </span>
           </a>
@@ -56,7 +56,7 @@ export default function Header({ data }: HeaderProps) {
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             {socialLinks.map((link) => (
               <Button key={link.label} variant="ghost" size="icon" asChild>
                 <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>

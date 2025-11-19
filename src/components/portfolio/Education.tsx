@@ -14,7 +14,7 @@ export default function Education({ education }: EducationProps) {
     <Section id="education" title="Education" icon={<GraduationCap className="h-6 w-6" />}>
       <div className="grid gap-8 md:grid-cols-2">
         {education.map((item, index) => (
-          <Card key={index} className="shadow-md transition-shadow hover:shadow-lg">
+          <Card key={index} className="transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
             <CardHeader>
                 <div className='flex justify-between items-start'>
                     <div>

@@ -21,7 +21,7 @@ const groupSkills = (skills: string[]) => {
     const keywords: Record<string, keyof typeof grouped> = {
         'python': 'Languages', 'java': 'Languages', 'javascript': 'Languages', 'c': 'Languages', 'html5': 'Languages', 'css': 'Languages', 'sql': 'Languages', 'typescript': 'Languages', 'php': 'Languages',
         'react.js': 'Frameworks', 'angular': 'Frameworks', 'ionic': 'Frameworks', 'node.js': 'Frameworks', 'flask': 'Frameworks', 'django': 'Frameworks',
-        'git': 'Tools', 'github': 'Tools', 'vs code': 'Tools', 'firebase': 'Tools', 'aws': 'Tools', 'xampp': 'Tools',
+        'git': 'Tools', 'github': 'Tools', 'vs code': 'Tools', 'firebase': 'Tools', 'aws': 'Tools', 'xampp': 'Tools', 'cisco packet tracer': 'Tools', 'network topology mapping': 'Tools',
         'oop': 'Concepts', 'data structures': 'Concepts', 'algorithms': 'Concepts', 'sdlc': 'Concepts', 'agile': 'Concepts', 'machine learning': 'Concepts',
         'problem solving': 'Soft Skills', 'communication': 'Soft Skills', 'teamwork': 'Soft Skills', 'time management': 'Soft Skills', 'adaptability': 'Soft Skills',
     };
@@ -72,14 +72,14 @@ export default function Skills({ skills }: SkillsProps) {
       icon={<Wrench className="h-6 w-6" />}
       className="bg-muted/50"
     >
-      <Card>
+      <Card className="shadow-lg">
         <CardContent className="p-6">
             {Object.entries(groupedSkills).map(([category, skillList]) => (
                 <div key={category} className="mb-6 last:mb-0">
-                    <h3 className="mb-4 text-lg font-semibold text-foreground">{category}</h3>
-                    <div className="flex flex-wrap gap-2">
+                    <h3 className="mb-4 font-headline text-xl text-foreground">{category}</h3>
+                    <div className="flex flex-wrap gap-3">
                         {skillList.map((skill, index) => (
-                        <Badge key={index} variant="default" className="text-sm">
+                        <Badge key={index} variant="default" className="text-base transform transition-transform duration-200 hover:scale-110 hover:shadow-md">
                             {skill}
                         </Badge>
                         ))}

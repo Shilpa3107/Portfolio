@@ -22,7 +22,7 @@ export default function Experience({ experience }: ExperienceProps) {
         {experience.map((item, index) => (
           <div
             key={index}
-            className={`relative mb-8 flex items-center ${
+            className={`relative mb-12 flex items-center ${
               index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'
             }`}
           >
@@ -32,7 +32,7 @@ export default function Experience({ experience }: ExperienceProps) {
                 index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
               }`}
             >
-              <Card className="shadow-md transition-shadow hover:shadow-lg">
+              <Card className="transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
                 <CardHeader>
                   <div className='flex justify-between items-start'>
                     <div>
@@ -49,7 +49,7 @@ export default function Experience({ experience }: ExperienceProps) {
                 </CardContent>
               </Card>
             </div>
-            <div className="absolute left-6 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-background bg-primary md:left-1/2"></div>
+            <div className="absolute left-6 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-background bg-primary ring-4 ring-primary/20 md:left-1/2"></div>
           </div>
         ))}
       </div>
