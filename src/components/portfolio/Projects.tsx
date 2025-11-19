@@ -1,6 +1,4 @@
-import type { ExtractResumeDataOutput } from '@/ai/flows/extract-resume-data';
-import type { IntegrateZenithChatProjectOutput } from '@/ai/flows/integrate-zenith-chat-project';
-import type { IntegrateMessageCraftAIProjectOutput } from '@/ai/flows/integrate-message-craft-ai-project';
+import type { GeneratePortfolioOutput } from '@/ai/flows/generate-portfolio-from-resume';
 import { Lightbulb } from 'lucide-react';
 import Section from './Section';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
@@ -9,9 +7,9 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type ProjectsProps = {
-  projects: ExtractResumeDataOutput['projects'];
-  zenithChat: IntegrateZenithChatProjectOutput;
-  messageCraftAI: IntegrateMessageCraftAIProjectOutput;
+  projects: NonNullable<GeneratePortfolioOutput['projects']>;
+  zenithChat: GeneratePortfolioOutput['zenithChat'];
+  messageCraftAI: GeneratePortfolioOutput['messageCraftAI'];
 };
 
 const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
@@ -42,6 +40,7 @@ export default function Projects({ projects, zenithChat, messageCraftAI }: Proje
     <Section id="projects" title="Projects" icon={<Lightbulb className="h-6 w-6" />}>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {allProjects.map((project, index) => {
+          if (!project.name) return null;
           const projectImage = getProjectImage(project.name);
           const technologies = typeof project.technologies === 'string' ? project.technologies.split(/, | • |:\s/): [];
           

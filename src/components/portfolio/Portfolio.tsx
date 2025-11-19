@@ -17,15 +17,15 @@ export default function Portfolio({ data }: PortfolioProps) {
     <div className="flex min-h-screen flex-col bg-background">
       <Header data={data} />
       <main className="flex-grow">
-        <About about={data.about} />
-        <Experience experience={data.experience} />
+        {data.about && <About about={data.about} />}
+        {data.experience && <Experience experience={data.experience} />}
         <Projects
-          projects={data.projects}
+          projects={data.projects || []}
           zenithChat={data.zenithChat}
           messageCraftAI={data.messageCraftAI}
         />
-        <Skills skills={data.skills} />
-        <Education education={data.education} />
+        {data.skills && <Skills skills={data.skills} />}
+        {data.education && <Education education={data.education} />}
       </main>
       <Footer data={data} />
       <Toaster />

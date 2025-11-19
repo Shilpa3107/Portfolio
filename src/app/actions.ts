@@ -1,26 +1,17 @@
 'use server';
 
 import {
-  extractResumeData,
-  type ExtractResumeDataOutput,
-} from '@/ai/flows/extract-resume-data';
-import {
-  integrateZenithChatProject,
-  type IntegrateZenithChatProjectOutput,
-} from '@/ai/flows/integrate-zenith-chat-project';
-import {
-  integrateMessageCraftAIProject,
-  type IntegrateMessageCraftAIProjectOutput,
-} from '@/ai/flows/integrate-message-craft-ai-project';
+  generatePortfolioFromResume,
+  type GeneratePortfolioOutput,
+} from '@/ai/flows/generate-portfolio-from-resume';
 import {
   resumeText,
   zenithChatDescription,
   messageCraftAIDescription,
 } from '@/lib/resume-data';
 
-export type PortfolioData = ExtractResumeDataOutput & {
-  zenithChat: IntegrateZenithChatProjectOutput;
-  messageCraftAI: IntegrateMessageCraftAIProjectOutput;
+// The AI's output is now the main data structure. We just add the contact info.
+export type PortfolioData = GeneratePortfolioOutput & {
   name: string;
   email: string;
   phone: string;
@@ -31,24 +22,20 @@ export type PortfolioData = ExtractResumeDataOutput & {
 
 export async function generatePortfolioAction(): Promise<PortfolioData> {
   try {
-    const [resumeData, zenithChat, messageCraftAI] = await Promise.all([
-      extractResumeData({ resumeText }),
-      integrateZenithChatProject({ projectDescription: zenithChatDescription }),
-      integrateMessageCraftAIProject({
-        projectDescription: messageCraftAIDescription,
-      }),
-    ]);
+    const portfolioData = await generatePortfolioFromResume({
+      resumeText,
+      zenithChatDescription,
+      messageCraftAIDescription,
+    });
 
     return {
-      ...resumeData,
-      zenithChat,
-      messageCraftAI,
+      ...portfolioData,
       name: 'Shilpa Sinha',
       email: 'shilpa.sinha3107@gmail.com',
       phone: '+91 76328 45447',
-      github: 'shilpa3107', // from resume context
-      linkedin: 'shilpa31', // from resume context
-      leetcode: 'Shilpa3107', // from resume context
+      github: 'shilpa3107',
+      linkedin: 'shilpa31',
+      leetcode: 'Shilpa3107',
     };
   } catch (error) {
     console.error('Error generating portfolio data:', error);

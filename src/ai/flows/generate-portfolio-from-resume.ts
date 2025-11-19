@@ -13,19 +13,53 @@ import {z} from 'genkit';
 
 const GeneratePortfolioInputSchema = z.object({
   resumeText: z.string().describe('The text content of the resume.'),
+  zenithChatDescription: z.string().describe('The project description for Zenith Chat.'),
+  messageCraftAIDescription: z.string().describe('The project description for MessageCraft AI.'),
 });
 export type GeneratePortfolioInput = z.infer<typeof GeneratePortfolioInputSchema>;
 
+const ProjectSchema = z.object({
+  name: z.string().optional().describe('The name of the project.'),
+  technologies: z.string().optional().describe('The technologies used in the project.'),
+  description: z.string().optional().describe('A description of the project.'),
+});
+
+const ZenithChatSchema = z.object({
+    features: z.array(z.string()).describe('The list of features of the project.'),
+    techStack: z.array(z.string()).describe('The list of technologies used in the project.'),
+});
+
+const MessageCraftAISchema = z.object({
+    features: z.array(z.string()).describe('The list of features of the project.'),
+    techStack: z.array(z.string()).describe('The list of technologies used in the project.'),
+});
+
 const GeneratePortfolioOutputSchema = z.object({
-  about: z.string().describe('The about section of the portfolio.'),
-  experience: z.string().describe('The experience section of the portfolio.'),
-  projects: z.string().describe('The projects section of the portfolio.'),
-  skills: z.string().describe('The skills section of the portfolio.'),
-  education: z.string().describe('The education section of the portfolio.'),
-  zenithChatFeatures: z.string().describe('Zenith Chat features'),
-  zenithChatTechStack: z.string().describe('Zenith Chat tech stack'),
-  messageCraftFeatures: z.string().describe('MessageCraft AI features'),
-  messageCraftTechStack: z.string().describe('MessageCraft AI tech stack'),
+  about: z.string().optional().describe('A summary of the person, extracted from the resume.'),
+  experience: z.array(
+    z.object({
+      title: z.string().optional().describe('The job title.'),
+      company: z.string().optional().describe('The company name.'),
+      location: z.string().optional().describe('The location of the job.'),
+      startDate: z.string().optional().describe('The start date of the job.'),
+      endDate: z.string().optional().describe('The end date of the job.'),
+      description: z.string().optional().describe('A description of the job responsibilities and achievements.'),
+    })
+  ).optional().describe('A list of the persons work experience.'),
+  projects: z.array(ProjectSchema).optional().describe('A list of the persons projects from their resume.'),
+  skills: z.array(z.string()).optional().describe('A list of the persons skills.'),
+  education: z.array(
+    z.object({
+      institution: z.string().optional().describe('The name of the institution.'),
+      degree: z.string().optional().describe('The degree obtained.'),
+      location: z.string().optional().describe('The location of the institution.'),
+      startDate: z.string().optional().describe('The start date of the education.'),
+      endDate: z.string().optional().describe('The end date of the education.'),
+      description: z.string().optional().describe('A description of the education.'),
+    })
+  ).optional().describe('A list of the persons education.'),
+  zenithChat: ZenithChatSchema.describe('Zenith Chat project details'),
+  messageCraftAI: MessageCraftAISchema.describe('MessageCraft AI project details'),
 });
 export type GeneratePortfolioOutput = z.infer<typeof GeneratePortfolioOutputSchema>;
 
@@ -37,20 +71,21 @@ const prompt = ai.definePrompt({
   name: 'generatePortfolioFromResumePrompt',
   input: {schema: GeneratePortfolioInputSchema},
   output: {schema: GeneratePortfolioOutputSchema},
-  prompt: `You are an AI expert at extracting information from resumes and constructing a portfolio website.
+  prompt: `You are an AI expert at extracting information from resumes and project descriptions to construct a portfolio website.
 
-  Given the following resume text, extract the relevant information and generate content for the following sections of a portfolio website:
+  Extract the relevant information from the provided resume text.
+  Also, extract the features and tech stack from the Zenith Chat and MessageCraft AI project descriptions.
+  
+  Resume Text:
+  {{{resumeText}}}
 
-  - About: A brief summary of the person, their career goals, and key strengths.
-  - Experience: A detailed list of their previous work experiences, including their roles and responsibilities.
-  - Projects: A showcase of their personal and academic projects, highlighting the technologies used and the outcomes achieved.
-  - Skills: A comprehensive list of their technical and soft skills.
-  - Education: A summary of their educational background, including degrees, certifications, and academic achievements.
-  - Zenith Chat: From the resume, extract the features of the Zenith Chat project and its technology stack. The features are the descriptions of the project, and the tech stack is the technologies used to build the project.
-  - MessageCraft AI: From the resume, extract the features of the MessageCraft AI project and its technology stack. The features are the descriptions of the project, and the tech stack is the technologies used to build the project.
+  Zenith Chat Description:
+  {{{zenithChatDescription}}}
 
-  Resume Text: {{{resumeText}}}
-  Output the sections in JSON format.
+  MessageCraft AI Description:
+  {{{messageCraftAIDescription}}}
+  
+  Output all the extracted information in a single JSON object that conforms to the output schema.
   `,
 });
 
