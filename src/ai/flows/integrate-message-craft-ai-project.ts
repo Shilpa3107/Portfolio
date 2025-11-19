@@ -33,13 +33,13 @@ const prompt = ai.definePrompt({
   name: 'messageCraftAIExtractorPrompt',
   input: {schema: IntegrateMessageCraftAIProjectInputSchema},
   output: {schema: IntegrateMessageCraftAIProjectOutputSchema},
-  prompt: `Given the following project description for MessageCraft AI, extract the key features and technology stack.  The model output must be valid JSON corresponding to the schema.
-
-Project Description: {{{projectDescription}}}
-
-Here is the schema: ${JSON.stringify(
-    IntegrateMessageCraftAIProjectOutputSchema.describe('The expected JSON schema for the response')
-  )}`,
+  prompt: `You are an expert at extracting project details from a description.
+  
+  Given the following project description for MessageCraft AI, extract the key features and technology stack.
+  
+  Project Description: {{{projectDescription}}}
+  
+  Return the data in the format specified by the output schema.`,
 });
 
 const integrateMessageCraftAIProjectFlow = ai.defineFlow(
