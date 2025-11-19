@@ -3,7 +3,7 @@
 import { Github, Linkedin, Mail, Phone, Code } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeProvider';
-import type { PortfolioData } from '@/app/actions';
+import type { PortfolioData } from '@/lib/portfolio-data';
 
 type HeaderProps = {
   data: PortfolioData;

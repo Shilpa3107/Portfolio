@@ -1,13 +1,15 @@
-import type { ExtractResumeDataOutput } from '@/ai/flows/extract-resume-data';
+import type { PortfolioData } from '@/lib/portfolio-data';
 import { Briefcase } from 'lucide-react';
 import Section from './Section';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '../ui/card';
 
 type ExperienceProps = {
-  experience: ExtractResumeDataOutput['experience'];
+  experience?: PortfolioData['experience'];
 };
 
 export default function Experience({ experience }: ExperienceProps) {
+  if (!experience) return null;
+
   return (
     <Section
       id="experience"

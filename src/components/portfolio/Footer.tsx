@@ -1,4 +1,4 @@
-import type { PortfolioData } from '@/app/actions';
+import type { PortfolioData } from '@/lib/portfolio-data';
 
 type FooterProps = {
   data: PortfolioData;

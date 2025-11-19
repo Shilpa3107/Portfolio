@@ -1,4 +1,4 @@
-import type { PortfolioData } from '@/app/actions';
+import type { PortfolioData } from '@/lib/portfolio-data';
 import { Lightbulb } from 'lucide-react';
 import Section from './Section';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';

@@ -1,11 +1,11 @@
-import type { ExtractResumeDataOutput } from '@/ai/flows/extract-resume-data';
+import type { PortfolioData } from '@/lib/portfolio-data';
 import { Wrench } from 'lucide-react';
 import Section from './Section';
 import { Badge } from '../ui/badge';
 import { Card, CardContent } from '../ui/card';
 
 type SkillsProps = {
-  skills: ExtractResumeDataOutput['skills'];
+  skills?: PortfolioData['skills'];
 };
 
 const groupSkills = (skills: string[]) => {
@@ -61,6 +61,8 @@ const groupSkills = (skills: string[]) => {
 }
 
 export default function Skills({ skills }: SkillsProps) {
+  if (!skills) return null;
+
   const groupedSkills = groupSkills(skills);
 
   return (

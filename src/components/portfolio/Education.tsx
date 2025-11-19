@@ -1,13 +1,15 @@
-import type { ExtractResumeDataOutput } from '@/ai/flows/extract-resume-data';
+import type { PortfolioData } from '@/lib/portfolio-data';
 import { GraduationCap } from 'lucide-react';
 import Section from './Section';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '../ui/card';
 
 type EducationProps = {
-  education: ExtractResumeDataOutput['education'];
+  education?: PortfolioData['education'];
 };
 
 export default function Education({ education }: EducationProps) {
+  if (!education) return null;
+  
   return (
     <Section id="education" title="Education" icon={<GraduationCap className="h-6 w-6" />}>
       <div className="grid gap-8 md:grid-cols-2">
