@@ -46,7 +46,7 @@ export const portfolioData: PortfolioData = {
   phone: '+91 76328 45447',
   github: 'shilpa3107',
   linkedin: 'shilpa31',
-  leetcode: 'Shilpa3107',
+  leetcode: 's_sinha',
   about: "I am a passionate and dedicated computer science student with a strong foundation in full-stack development, machine learning, and software engineering principles. With hands-on experience in developing web applications and a knack for problem-solving, I thrive in collaborative environments and am eager to contribute to innovative projects. I am constantly seeking to expand my skills and take on new challenges in the tech industry.",
   experience: [
     {

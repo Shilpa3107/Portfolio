@@ -32,7 +32,7 @@ export default function Header({ data }: HeaderProps) {
       label: 'LinkedIn',
     },
     {
-      href: `https://leetcode.com/${data.leetcode}`,
+      href: `https://leetcode.com/u/${data.leetcode}`,
       icon: <Code className="h-4 w-4" />,
       label: 'LeetCode',
     },
