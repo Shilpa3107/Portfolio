@@ -1,74 +1,74 @@
 'use server';
 
 /**
- * @fileOverview Generates a portfolio website from resume data.
+ * @fileOverview A resume data extraction AI agent.
  *
- * - generatePortfolioFromResume - A function that generates the portfolio.
- * - GeneratePortfolioInput - The input type for the generatePortfolioFromResume function.
- * - GeneratePortfolioOutput - The return type for the generatePortfolioFromResume function.
+ * - generatePortfolioFromResume - A function that handles the resume data extraction process.
+ * - GeneratePortfolioFromResumeInput - The input type for the function.
+ * - GeneratePortfolioFromResumeOutput - The return type for the function.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { type ExtractBasicResumeDataOutput } from './extract-basic-resume-data';
 
-const GeneratePortfolioInputSchema = z.object({
-  resumeData: z.custom<ExtractBasicResumeDataOutput>(),
-  zenithChatDescription: z.string().describe('The project description for Zenith Chat.'),
-  messageCraftAIDescription: z.string().describe('The project description for MessageCraft AI.'),
+const GeneratePortfolioFromResumeInputSchema = z.object({
+  resumeText: z.string().describe('The text content of the resume.'),
 });
-export type GeneratePortfolioInput = z.infer<typeof GeneratePortfolioInputSchema>;
+export type GeneratePortfolioFromResumeInput = z.infer<typeof GeneratePortfolioFromResumeInputSchema>;
 
-const ZenithChatSchema = z.object({
-  name: z.literal('Zenith Chat'),
-  features: z.array(z.string()).describe('The list of features of the project.'),
-  techStack: z.array(z.string()).describe('The list of technologies used in the project.'),
+const GeneratePortfolioFromResumeOutputSchema = z.object({
+  about: z.string().optional().describe('A summary of the person, extracted from the resume.'),
+  experience: z.array(
+    z.object({
+      title: z.string().optional().describe('The job title.'),
+      company: z.string().optional().describe('The company name.'),
+      location: z.string().optional().describe('The location of the job.'),
+      startDate: z.string().optional().describe('The start date of the job.'),
+      endDate: z.string().optional().describe('The end date of the job.'),
+      description: z.string().optional().describe('A description of the job responsibilities and achievements.'),
+    })
+  ).optional().describe('A list of the persons work experience.'),
+  projects: z.array(
+    z.object({
+      name: z.string().optional().describe('The name of the project.'),
+      technologies: z.string().optional().describe('The technologies used in the project.'),
+      description: z.string().optional().describe('A description of the project.'),
+    })
+  ).optional().describe('A list of the persons projects.'),
+  skills: z.array(z.string()).optional().describe('A list of the persons skills.'),
+  education: z.array(
+    z.object({
+      institution: z.string().optional().describe('The name of the institution.'),
+      degree: z.string().optional().describe('The degree obtained.'),
+      location: z.string().optional().describe('The location of the institution.'),
+      startDate: z.string().optional().describe('The start date of the education.'),
+      endDate: z.string().optional().describe('The end date of the education.'),
+      description: z.string().optional().describe('A description of the education.'),
+    })
+  ).optional().describe('A list of the persons education.'),
 });
+export type GeneratePortfolioFromResumeOutput = z.infer<typeof GeneratePortfolioFromResumeOutputSchema>;
 
-const MessageCraftAISchema = z.object({
-  name: z.literal('MessageCraft AI'),
-  features: z.array(z.string()).describe('The list of features of the project.'),
-  techStack: z.array(z.string()).describe('The list of technologies used in the project.'),
-});
-
-const ProjectDetailsSchema = z.object({
-  zenithChat: ZenithChatSchema.describe('Zenith Chat project details'),
-  messageCraftAI: MessageCraftAISchema.describe('MessageCraft AI project details'),
-});
-
-export type GeneratePortfolioOutput = ExtractBasicResumeDataOutput & z.infer<typeof ProjectDetailsSchema>;
-
-
-export async function generatePortfolioFromResume(
-  input: GeneratePortfolioInput
-): Promise<GeneratePortfolioOutput> {
-  const projectDetails = await generatePortfolioFromResumeFlow(input);
-  return { ...input.resumeData, ...projectDetails };
+export async function generatePortfolioFromResume(input: GeneratePortfolioFromResumeInput): Promise<GeneratePortfolioFromResumeOutput> {
+  return generatePortfolioFromResumeFlow(input);
 }
 
 const prompt = ai.definePrompt({
   name: 'generatePortfolioFromResumePrompt',
-  input: {schema: GeneratePortfolioInputSchema},
-  output: {schema: ProjectDetailsSchema},
-  prompt: `You are an AI expert at extracting project details from descriptions.
-  
-  Extract the features and tech stack from the Zenith Chat and MessageCraft AI project descriptions.
-  
-  Zenith Chat Description:
-  {{{zenithChatDescription}}}
+  input: {schema: GeneratePortfolioFromResumeInputSchema},
+  output: {schema: GeneratePortfolioFromResumeOutputSchema},
+  prompt: `You are a resume parsing expert. Please extract the about, experience, projects, skills, and education sections from the resume text provided.
 
-  MessageCraft AI Description:
-  {{{messageCraftAIDescription}}}
-  
-  Output the extracted information in a single JSON object that conforms to the output schema.
-  `,
+Resume Text: {{{resumeText}}}
+
+Make sure to include all available information. If some information is not present, you can omit it.`,
 });
 
 const generatePortfolioFromResumeFlow = ai.defineFlow(
   {
     name: 'generatePortfolioFromResumeFlow',
-    inputSchema: GeneratePortfolioInputSchema,
-    outputSchema: ProjectDetailsSchema,
+    inputSchema: GeneratePortfolioFromResumeInputSchema,
+    outputSchema: GeneratePortfolioFromResumeOutputSchema,
   },
   async input => {
     const {output} = await prompt(input);

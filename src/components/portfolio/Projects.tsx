@@ -1,4 +1,4 @@
-import type { GeneratePortfolioOutput } from '@/ai/flows/generate-portfolio-from-resume';
+import type { PortfolioData } from '@/app/actions';
 import { Lightbulb } from 'lucide-react';
 import Section from './Section';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
@@ -7,9 +7,9 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type ProjectsProps = {
-  projects: NonNullable<GeneratePortfolioOutput['projects']>;
-  zenithChat: GeneratePortfolioOutput['zenithChat'];
-  messageCraftAI: GeneratePortfolioOutput['messageCraftAI'];
+  projects: NonNullable<PortfolioData['projects']>;
+  zenithChat: PortfolioData['zenithChat'];
+  messageCraftAI: PortfolioData['messageCraftAI'];
 };
 
 const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
@@ -23,17 +23,17 @@ const getProjectImage = (projectName: string) => {
 
 export default function Projects({ projects, zenithChat, messageCraftAI }: ProjectsProps) {
   const allProjects = [
-    ...(projects || []),
     {
-      name: 'Zenith Chat',
-      description: zenithChat.features.join(' '),
+      name: zenithChat.name,
+      description: zenithChat.features.join('. '),
       technologies: zenithChat.techStack,
     },
     {
-      name: 'MessageCraft AI',
-      description: messageCraftAI.features.join(' '),
+      name: messageCraftAI.name,
+      description: messageCraftAI.features.join('. '),
       technologies: messageCraftAI.techStack,
     },
+    ...(projects || []),
   ];
 
   return (

@@ -2,16 +2,64 @@
 
 import {
   generatePortfolioFromResume,
-  type GeneratePortfolioOutput,
 } from '@/ai/flows/generate-portfolio-from-resume';
-import { extractBasicResumeData } from '@/ai/flows/extract-basic-resume-data';
-import {
-  resumeText,
-  zenithChatDescription,
-  messageCraftAIDescription,
-} from '@/lib/resume-data';
+import { resumeText } from '@/lib/resume-data';
 
-export type PortfolioData = GeneratePortfolioOutput & {
+const zenithChat = {
+  name: 'Zenith Chat',
+  features: [
+    'Empathetic AI Chatbot',
+    'Mood Detection',
+    'Personalized Relaxation Tips',
+    'Modern & Responsive UI',
+    'Secure & Private',
+  ],
+  techStack: [
+    'Next.js',
+    'TypeScript',
+    'Tailwind CSS',
+    'ShadCN UI',
+    'Genkit',
+    'Google Gemini',
+  ],
+};
+
+const messageCraftAI = {
+  name: 'MessageCraft AI',
+  features: [
+    'AI-Powered Message Generation',
+    'Prompt Improvement',
+    'Easy to Use',
+  ],
+  techStack: ['Next.js', 'Genkit', 'Google Gemini', 'ShadCN UI'],
+};
+
+export type PortfolioData = {
+  about?: string;
+  experience?: {
+    title?: string;
+    company?: string;
+    location?: string;
+    startDate?: string;
+    endDate?: string;
+    description?: string;
+  }[];
+  projects?: {
+    name?: string;
+    technologies?: string;
+    description?: string;
+  }[];
+  skills?: string[];
+  education?: {
+    institution?: string;
+    degree?: string;
+    location?: string;
+    startDate?: string;
+    endDate?: string;
+    description?: string;
+  }[];
+  zenithChat: typeof zenithChat;
+  messageCraftAI: typeof messageCraftAI;
   name: string;
   email: string;
   phone: string;
@@ -22,16 +70,12 @@ export type PortfolioData = GeneratePortfolioOutput & {
 
 export async function generatePortfolioAction(): Promise<PortfolioData> {
   try {
-    const basicResumeData = await extractBasicResumeData({ resumeText });
-
-    const portfolioData = await generatePortfolioFromResume({
-      resumeData: basicResumeData,
-      zenithChatDescription,
-      messageCraftAIDescription,
-    });
+    const resumeData = await generatePortfolioFromResume({ resumeText });
 
     return {
-      ...portfolioData,
+      ...resumeData,
+      zenithChat,
+      messageCraftAI,
       name: 'Shilpa Sinha',
       email: 'shilpa.sinha3107@gmail.com',
       phone: '+91 76328 45447',
