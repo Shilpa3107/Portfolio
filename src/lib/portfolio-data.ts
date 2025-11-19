@@ -58,6 +58,14 @@ export const portfolioData: PortfolioData = {
       description: 'Designed and developed a full-stack course registration platform using Python, Angular, Typescript, MySQL and leaflet, enabling real-time OTP-based user authentication.',
     },
     {
+      title: 'Cyber Security (Virtual Internship)',
+      company: 'Cisco',
+      location: 'Remote',
+      startDate: 'Jul 2025',
+      endDate: 'Sep 2025',
+      description: 'Audited and analyzed college network security, identifying vulnerabilities and suggesting countermeasures. Designed secure hybrid access for remote faculty and implemented smart web access policies for students. Delivered network diagrams, technical documentation, and risk-based recommendations.',
+    },
+    {
       title: 'Software Developer Intern',
       company: 'Workzen',
       location: 'Remote, India',
@@ -94,7 +102,7 @@ export const portfolioData: PortfolioData = {
   skills: [
     "Languages: Python, Java, JavaScript, C, HTML5, CSS, SQL, TypeScript, PHP",
     "Frameworks: React.js, Angular, Ionic, Node.js, Flask, Django",
-    "Tools: Git, GitHub, VS Code, Firebase, AWS, XAMPP",
+    "Tools: Git, GitHub, VS Code, Firebase, AWS, XAMPP, Cisco Packet Tracer, Network Topology Mapping",
     "Concepts: OOP, Data Structures, Algorithms, SDLC, Agile, Machine Learning",
     "Soft Skills: Problem Solving, Communication, Teamwork, Time Management, Adaptability"
   ],
