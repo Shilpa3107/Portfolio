@@ -28,8 +28,8 @@ export default function Projects({ projects, zenithChat, messageCraftAI }: Proje
     ...projects,
     {
       name: 'Zenith Chat',
-      description: zenithChat.features,
-      technologies: zenithChat.techStack,
+      description: zenithChat.features.join(' '),
+      technologies: zenithChat.techStack.join(', '),
     },
     {
       name: 'MessageCraft AI',

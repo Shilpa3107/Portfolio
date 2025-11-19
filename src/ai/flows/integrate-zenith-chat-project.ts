@@ -23,10 +23,10 @@ export type IntegrateZenithChatProjectInput = z.infer<
 
 const IntegrateZenithChatProjectOutputSchema = z.object({
   features: z
-    .string()
+    .array(z.string())
     .describe('The extracted features of the Zenith Chat project.'),
   techStack: z
-    .string()
+    .array(z.string())
     .describe('The extracted tech stack of the Zenith Chat project.'),
 });
 export type IntegrateZenithChatProjectOutput = z.infer<
