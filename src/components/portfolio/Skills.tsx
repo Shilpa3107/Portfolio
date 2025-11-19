@@ -77,9 +77,9 @@ export default function Skills({ skills }: SkillsProps) {
             {Object.entries(groupedSkills).map(([category, skillList]) => (
                 <div key={category} className="mb-6 last:mb-0">
                     <h3 className="mb-4 font-headline text-xl text-foreground">{category}</h3>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                         {skillList.map((skill, index) => (
-                        <Badge key={index} variant="default" className="text-base transform transition-transform duration-200 hover:scale-110 hover:shadow-md">
+                        <Badge key={index} variant="default" className="text-sm">
                             {skill}
                         </Badge>
                         ))}
