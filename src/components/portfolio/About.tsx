@@ -12,7 +12,7 @@ export default function About({ about }: AboutProps) {
       <div className="grid items-center gap-8 md:grid-cols-3">
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full md:h-64 md:w-64">
            <Image
-            src="https://picsum.photos/seed/avatar/400/400"
+            src="https://storage.googleapis.com/prompt-gallery/prod/9821a711-f2f5-465d-9b55-41275d27553f/image.jpeg"
             alt="Shilpa Sinha"
             width={400}
             height={400}
