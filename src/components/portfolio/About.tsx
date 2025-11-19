@@ -1,6 +1,7 @@
 import { User } from 'lucide-react';
 import Section from './Section';
 import Image from 'next/image';
+import ProfileImage from '@/images/1755766029947.jpg';
 
 type AboutProps = {
   about: string;
@@ -12,8 +13,9 @@ export default function About({ about }: AboutProps) {
       <div className="grid items-center gap-8 md:grid-cols-3">
         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full md:h-64 md:w-64">
           <Image
-            src="https://picsum.photos/seed/1/300/300"
+            src={ProfileImage}
             alt="Shilpa Sinha"
+            placeholder="blur"
             width={300}
             height={300}
             data-ai-hint="professional portrait"
