@@ -98,6 +98,21 @@ export const portfolioData: PortfolioData = {
       technologies: ['PHP', 'MySQL', 'JavaScript', 'HTML/CSS'],
       description: 'Created a secure research submission portal with user authentication, handling submissions from 50+ faculty members. Reduced form errors by 30% through robust input validation and improved data security measures.',
     },
+    {
+        name: 'Speech-Segmentation',
+        technologies: ['Python', 'pydub', 'numpy', 'matplotlib'],
+        description: 'Processes an audio file to detect and segment speech from silence, exporting the speech portions as individual audio clips. Includes optional waveform visualization.'
+    },
+    {
+        name: 'PrivacyShield',
+        technologies: ['Python', 'Streamlit', 'pandas', 'nltk', 'androguard'],
+        description: 'An app security and privacy analyzer for Android APKs. It assesses permissions, detects potential malware, and analyzes privacy policies to generate a risk score.'
+    },
+    {
+        name: 'TaskTrackerPro',
+        technologies: ['React', 'TypeScript', 'Redux', 'MUI', 'Express.js'],
+        description: 'A Kanban board application for managing tasks through different stages. Features drag-and-drop functionality and a search bar to filter tasks.'
+    },
   ],
   skills: [
     "Languages: Python, Java, JavaScript, C, HTML5, CSS, SQL, TypeScript, PHP",
